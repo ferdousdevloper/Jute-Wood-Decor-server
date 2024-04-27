@@ -60,6 +60,26 @@ async function run() {
         const result = await decorCollection.insertOne(newCraftItem);
         res.send(result);
     })
+    app.put('/decor/:id', async(req, res)=>{
+      const id = req.params.id;
+      const filter = {_id: new ObjectId(id)}
+      const options = {upsert: true};
+      const updatedCraftItem = req.body;
+      const craftItem = {
+        $set:{
+          name: updatedCraftItem.name, 
+          category: updatedCraftItem.category, 
+          price: updatedCraftItem.price, 
+          customization: updatedCraftItem.customization, processingTime: updatedCraftItem.processingTime, 
+          stockStatus: updatedCraftItem.stockStatus, 
+          image: updatedCraftItem.image, 
+          rating: updatedCraftItem.rating, 
+          description: updatedCraftItem.description
+        }
+      }
+      const result = await decorCollection.updateOne(filter, craftItem, options)
+      res.send(result)
+    })
 
     app.delete('/decor/:id', async(req, res)=>{
       const id = req.params.id;
