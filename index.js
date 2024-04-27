@@ -53,6 +53,7 @@ async function run() {
         res.send(decor);
     })
 
+
     app.post('/decor', async(req, res)=>{
         const newCraftItem = req.body;
         console.log(newCraftItem);
@@ -71,6 +72,13 @@ async function run() {
         console.log(req.params.email);
         const result = await decorCollection.find({email:req.params.email}).toArray();
         res.send(result)
+    })
+
+    app.get('/decor/:id', async(req, res)=>{
+      const id = req.params.id;
+      const query = {_id: new ObjectId(id)}
+      const result = await decorCollection.findOne(query)
+      res.send(result);
     })
 
     //user related apis
