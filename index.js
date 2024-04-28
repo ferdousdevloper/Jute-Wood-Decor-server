@@ -39,12 +39,16 @@ async function run() {
 
     const decorCollection = client.db('decorDB').collection('decor')
     const userCollection = client.db('decorDB').collection('user');
+    const categoryCollection = client.db('decorDB').collection('categoryCollection');
+
 
     app.get('/decor', async(req, res) =>{
         const cursor = decorCollection.find();
         const result = await cursor.toArray();
         res.send(result);
     })
+
+    
 
     app.get('/decor/:id', async(req, res)=>{
         const id = req.params.id;
@@ -94,6 +98,12 @@ async function run() {
         res.send(result)
     })
 
+    app.get('/category/:category',async(req, res)=>{
+      console.log(req.params.category);
+      const result = await categoryCollection.find({category:req.params.category}).toArray();
+      res.send(result)
+    })
+
     app.get('/decor/:id', async(req, res)=>{
       const id = req.params.id;
       const query = {_id: new ObjectId(id)}
@@ -114,6 +124,14 @@ async function run() {
         console.log(user);
         const result = await userCollection.insertOne(user)
         res.send(result);
+    })
+
+    //category related apis
+
+    app.get('/category', async(req, res)=>{
+      const cursor = categoryCollection.find();
+      const result = await cursor.toArray();
+      res.send(result);
     })
 
 
