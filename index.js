@@ -6,7 +6,9 @@ const app = express();
 const port = process.env.PORT || 5000;
 
 //middleware
-
+app.use(cors({
+  origin: ["http://localhost:5173", "https://assignment-10-143ad.web.app"]
+}));
 app.use(express.json());
 
 
